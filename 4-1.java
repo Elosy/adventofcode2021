@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class Main {
 public static void main(String[] args) {
 	int[] input_rolls = {69, 88, 67, 56, 53, 97, 46, 29, 37, 51, 3, 93, 92, 78, 41, 22, 45, 66, 13, 82, 2, 7, 52, 40, 18, 70, 32, 95, 89, 64, 84, 68, 83, 26, 43, 0, 61, 36, 57, 34, 80, 39, 6, 63, 72, 98, 21, 54, 23, 28, 65, 16, 76, 11, 20, 33, 96, 4, 10, 25, 30, 19, 90, 24, 55, 91, 15, 8, 71, 99, 58, 14, 60, 48, 44, 17, 47, 85, 74, 87, 86, 27, 42, 38, 81, 79, 94, 73, 12, 5, 77, 35, 9, 62, 50, 31, 49, 59, 75, 1};
@@ -610,29 +607,32 @@ public static void main(String[] args) {
 	int last_roll = 0;
 	for (int roll = 0; roll < input_boards.length && !bingo; roll++) {
 		for (int board = 0; board < input_boards.length && !bingo; board++) {
-			int row_bingo = 0;
+			int row_bingo = 0; //counter for row
 			for (int row = 0; row < input_boards[board].length && !bingo; row++) {
-				int column_bingo = 0;
-				for (int column = 0; column < input_boards[board][row].length && column_bingo != 5; column++) {
+				int column_bingo = 0; //counter for col
+				for (int column = 0; column < input_boards[board][row].length && !bingo; column++) {
 					if (input_boards[board][row][column] == input_rolls[roll]) {
 						input_boards[board][row][column] = 11111;
 					}
 					if (input_boards[board][row][column] == 11111) {
 						column_bingo++;
+						if (column_bingo == 5) {
+							bingo = true;
+							winner_board = board;
+							last_roll = input_rolls[roll];
+						}
 					}
 				}
 				if (input_boards[board][row][0] == 11111) {
 					row_bingo++;
-				}
-				if (row_bingo == 5 || column_bingo == 5) {
-					bingo = true;
-					winner_board = board;
-					last_roll = input_rolls[roll];
+					if (row_bingo == 5) {
+						bingo = true;
+						winner_board = board;
+						last_roll = input_rolls[roll];
+					}
 				}
 			}
-			
 		}
-		
 	}
 	int score = 0;
 	for (int i = 0; i < input_boards[winner_board].length; i++) {
