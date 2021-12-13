@@ -1,3 +1,7 @@
+import com.sun.org.apache.xpath.internal.operations.Equals;
+
+import java.util.Arrays;
+
 public class Main {
 public static void main(String[] args) {
 	int[] input_rolls = {69, 88, 67, 56, 53, 97, 46, 29, 37, 51, 3, 93, 92, 78, 41, 22, 45, 66, 13, 82, 2, 7, 52, 40, 18, 70, 32, 95, 89, 64, 84, 68, 83, 26, 43, 0, 61, 36, 57, 34, 80, 39, 6, 63, 72, 98, 21, 54, 23, 28, 65, 16, 76, 11, 20, 33, 96, 4, 10, 25, 30, 19, 90, 24, 55, 91, 15, 8, 71, 99, 58, 14, 60, 48, 44, 17, 47, 85, 74, 87, 86, 27, 42, 38, 81, 79, 94, 73, 12, 5, 77, 35, 9, 62, 50, 31, 49, 59, 75, 1};
@@ -623,13 +627,10 @@ public static void main(String[] args) {
 						}
 					}
 				}
-				if (input_boards[board][row][0] == 11111) {
-					row_bingo++;
-					if (row_bingo == 5) {
-						bingo = true;
-						winner_board = board;
-						last_roll = input_rolls[roll];
-					}
+				if (Arrays.equals(input_boards[board][row], new int[]{11111, 11111, 11111, 11111, 11111})) {
+					bingo = true;
+					winner_board = board;
+					last_roll = input_rolls[roll];
 				}
 			}
 		}

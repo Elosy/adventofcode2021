@@ -623,9 +623,7 @@ public static void main(String[] args) {
 						}
 					}
 				}
-				if (input_boards[board][row][0] == 11111) {
-					row_bingo++;
-					if (row_bingo == 5) {
+				if (input_boards[board][row] == {11111,11111,11111,11111,11111}) {
 						bingo = true;
 						winner_board = board;
 						last_roll = input_rolls[roll];
