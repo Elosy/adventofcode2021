@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
@@ -604,46 +605,51 @@ public static void main(String[] args) {
 			  {84, 68, 71, 19, 13},
 			  {58, 57, 35, 77, 14}
 	}};
-	boolean bingo = false;
-	int winner_board = 0;
+	ArrayList<Integer> winners = new ArrayList<>();
+	int last_winner_board = 0;
 	int last_roll = 0;
-	for (int roll = 0; roll < input_boards.length && !bingo; roll++) {
-		for (int board = 0; board < input_boards.length && !bingo; board++) {
-			for (int row = 0; row < input_boards[board].length && !bingo; row++) {
-				int bingo_row = 0; //counter for whole row
-				int bingo_column = 0; //counter for position x in each row
-				for (int position = 0; position < input_boards[board][row].length && !bingo; position++) {
-					if (input_boards[board][row][position] == input_rolls[roll]) {
-						input_boards[board][row][position] = 11111;
-					}
-					if (input_boards[board][row][position] == 11111) {
-						bingo_row++;
-						if (bingo_row == 5) {
-							bingo = true;
-							winner_board = board;
-							last_roll = input_rolls[roll];
+	for (int roll = 0; roll < input_rolls.length && winners.size() < 99; roll++) {
+		
+		for (int board = 0; board < input_boards.length; board++) {
+			boolean bingo = false;
+			if (!winners.contains(board)) {
+				for (int row = 0; row < input_boards[board].length && !bingo; row++) {
+					int bingo_row = 0; //counter for whole row
+					int bingo_column = 0; //counter for position x in each row
+					for (int position = 0; position < input_boards[board][row].length && !bingo; position++) {
+						if (input_boards[board][row][position] == input_rolls[roll]) {
+							input_boards[board][row][position] = 11111;
 						}
-					}
-					if (input_boards[board][position][row] == 11111) {
-						bingo_column++;
-						if (bingo_column == 5) {
-							bingo = true;
-							winner_board = board;
-							last_roll = input_rolls[roll];
+						if (input_boards[board][row][position] == 11111) {
+							bingo_row++;
+							if (bingo_row == 5) {
+								bingo = true;
+								last_winner_board = board;
+								last_roll = input_rolls[roll];
+							}
+						}
+						if (input_boards[board][position][row] == 11111) {
+							bingo_column++;
+							if (bingo_column == 5) {
+								bingo = true;
+								last_winner_board = board;
+								last_roll = input_rolls[roll];
+							}
 						}
 					}
 				}
 			}
+			if (bingo) winners.add(board);
 		}
 	}
 	int score = 0;
-	for (int i = 0; i < input_boards[winner_board].length; i++) {
-		for (int j = 0; j < input_boards[winner_board][i].length; j++) {
-			if (input_boards[winner_board][i][j] != 11111) score += input_boards[winner_board][i][j];
+	for (int i = 0; i < input_boards[last_winner_board].length; i++) {
+		for (int j = 0; j < input_boards[last_winner_board][i].length; j++) {
+			if (input_boards[last_winner_board][i][j] != 11111) score += input_boards[last_winner_board][i][j];
 		}
 	}
-	System.out.println(winner_board + "<-winner last->" + last_roll);
-	System.out.println(Arrays.deepToString(input_boards[winner_board]));
+	System.out.println(last_winner_board + "<-winner last->" + last_roll);
+	System.out.println(Arrays.deepToString(input_boards[last_winner_board]));
 	System.out.println(score * last_roll);
 }
 }
