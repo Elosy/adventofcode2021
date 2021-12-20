@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.FileWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class Main {
@@ -11,8 +11,7 @@ public static void arrSwap(int[] arr, int i, int j) {
 }
 
 public static void main(String[] args) {
-	int[][] coordinates = new int[250][4];
-	
+	int[][] coordinates = new int[500][4];
 	try {
 		File input_txt = new File("5input.txt");
 		Scanner myReader = new Scanner(input_txt);
@@ -26,7 +25,6 @@ public static void main(String[] args) {
 		System.out.println("An error occurred in reading .txt");
 		e.printStackTrace();
 	}
-	
 	int[][] map = new int[1000][1000];
 	for (int[] coordinate : coordinates) {
 		
@@ -38,7 +36,6 @@ public static void main(String[] args) {
 				map[coordinate[0]][c] += 1;
 			}
 		}
-		
 		if (coordinate[1] == coordinate[3]) {
 			if (coordinate[0] > coordinate[2]) {
 				arrSwap(coordinate, 0, 2);
@@ -48,17 +45,6 @@ public static void main(String[] args) {
 			}
 		}
 	}
-	
-	try {
-		FileWriter myWriter = new FileWriter("filename.txt");
-		myWriter.write(System.out.println(Arrays.deepToString(map)));
-		myWriter.close();
-		System.out.println("Successfully wrote to the file.");
-	} catch (IOException e) {
-		System.out.println("An error occurred.");
-		e.printStackTrace();
-	}
-	
 	int counter_of_dangers = 0;
 	for (int[] i : map) {
 		for (int m : i) {
